@@ -26,7 +26,7 @@ shinyServer(function(input, output){
       input$num_grade4*input$num_cred4
     })
     
-    values$totalcgpa<-isolate({
+    values$totalgpa<-isolate({
       (values$sub1+values$sub2+values$sub3+values$sub4)/values$totalcred
       #(values$sub1+values$sub2+values$sub3+values$sub4)/values$totalcred
     })
@@ -38,10 +38,26 @@ shinyServer(function(input, output){
       paste("Total credit hours is ", values$totalcred)
   })
   
-  output$text_cgpa<-renderText({
+  output$text_gpa<-renderText({
     if(input$action_total==0) ""
     else
-      paste("Total cgpa is ", values$totalcgpa)
+      paste("Total gpa is ", values$totalgpa)
+  })
+  
+  output$text_comment<-renderText({
+    if(input$action_total==0) ""
+    else({
+      if(values$totalgpa>3.4)
+        paste("Excellent, keep up the good work!")
+      else if(values$totalgpa>2.9)
+        paste("Good job, continue improving yourself!")
+      else if(values$totalgpa>2.4)
+        paste("Hang in there, you can do it!")
+      else if(values$totalgpa<2.5)
+        paste("Continue to work harder in the future")
+      else
+        paste("Something went wrong with the system")
+    })
   })
   
 })
